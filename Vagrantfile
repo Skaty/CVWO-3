@@ -23,13 +23,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Forward the Rails server port to our host machinee
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
+  config.vm.network :forwarded_port, guest: 3000, host: 3000, auto_correct: true
 
   # Use Chef Solo as provisioner
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
 
+    chef.add_recipe "nodejs"
     chef.add_recipe "apt"
     chef.add_recipe "ruby_build"
     chef.add_recipe "rbenv::user"
